@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="assets/js/lib/paper-full.js"></script>
+	<script type="text/javascript" src="assets/js/lib/howler.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+	<script type="text/paperscript" canvas="myCanvas">
+	// console.log(view.size); show dimensions
+	var circles = [];
+
+	var keyData = {
+		a: {
+			color: "purple",
+			sound: new Howl({
+				src:['assets/sounds/moon.mp3']
+			})
+
+		},
+		s: {
+			color: "green",
+			sound: new Howl({
+				src:['assets/sounds/clay.mp3']
+			})
+
+		},
+		d: {
+			color: "yellow",
+			sound: new Howl({
+				src:['assets/sounds/confetti.mp3']
+			})
+
+		},
+		g: {
+			color: "blue",
+			sound: new Howl({
+				src:['assets/sounds/splits.mp3']
+			})
+
+		},
+		f: {
+			color: "#ff00f2",
+			sound: new Howl({
+				src:['assets/sounds/pinwheel.mp3']
+			})
+		},
+		r: {
+			color: "pink",
+			sound: new Howl({
+				src:['assets/sounds/wipe.mp3']
+			})
+		},
+		e: {
+			color: "red",
+			sound: new Howl({
+				src:['assets/sounds/glimmer.mp3']
+			})
+		},
+		t: {
+			color: "yellow",
+			sound: new Howl({
+				src:['assets/sounds/dotted-spiral.mp3']
+			})
+		},
+		y: {
+			color: "red",
+			sound: new Howl({
+				src:['assets/sounds/corona.mp3']
+			})
+		}
+		
+
+
+
+	}
+
+
+	function onKeyDown(event) {
+	 //	randon points on keydown
+	 if(keyData[event.key]){
+	 	console.log(event.key);
+		var randomRadius = Math.random()*500 + 400;
+		var maxPoint = new Point(view.size.width, view.size.height);
+		var randomPoint = Point.random();
+		var point = maxPoint * randomPoint;
+		var newCircle = new Path.Circle(point, 1000);
+		newCircle.fillColor = keyData[event.key].color;
+		keyData[event.key].sound.play();
+	 	circles.push ( newCircle);	
+	 }	 	
+	 
+	}	
+
+	function onFrame(event){
+		for (var i = 0; i<circles.length; i++){
+			circles[i].fillColor.hue += 1;
+			circles[i].scale(0.90);
+			if(circles[i].area<1){
+				circles[i].remove();
+				circles.splice(i,1);
+				i--;
+			}
+		}
+	}
+
+
+
+	// new syntax
+	// var sound = new Howl({
+	//   src: ['sounds/clay.mp3']
+	// });
+	 
+	// sound.play();
+
+		
+	</script>
+</head>
+<body>
+
+	<canvas id="myCanvas" resize></canvas>
+	<script type="text/javascript">
+		alert("get ready to jam :) by rodolfoluppi")
+	</script>
+</body>
+</html>
